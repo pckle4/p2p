@@ -22,6 +22,7 @@ export default defineConfig({
         ]
       : []),
   ],
+  base: process.env.NODE_ENV === "production" ? "/your-repo-name/" : "/",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "client", "src"),
