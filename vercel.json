@@ -2,21 +2,22 @@
   "version": 2,
   "builds": [
     {
-      "src": "package.json",
-      "use": "@vercel/node"
+      "src": "client/dist/**", // Output folder after Vite builds the frontend
+      "use": "@vercel/static"  // Serve frontend as static files
+    },
+    {
+      "src": "server/index.ts", // Backend entry point
+      "use": "@vercel/node"    // Run backend as a serverless function
     }
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
+      "src": "/api/(.*)",      // Route API requests to the backend
       "dest": "server/index.ts"
     },
     {
-      "src": "/(.*)",
-      "dest": "client/index.html"
+      "src": "/(.*)",          // Serve frontend for all other routes
+      "dest": "client/dist/$1" // Matches built frontend assets
     }
-  ],
-  "env": {
-    "NODE_ENV": "production"
-  }
+  ]
 }
